@@ -49,6 +49,8 @@ pub struct LeptosOptions {
     /// Defaults to `3001`
     #[builder(default = 3001)]
     pub reload_port: u32,
+    #[builder(setter(into))]
+    pub compress: bool,
 }
 
 impl LeptosOptions {
@@ -66,6 +68,7 @@ impl LeptosOptions {
                 .parse()?,
             reload_port: env_w_default("LEPTOS_RELOAD_PORT", "3001")?
                 .parse()?,
+            compress: env_w_default("LEPTOS_COMPRESS", "false")?.parse()?,
         })
     }
 }

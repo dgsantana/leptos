@@ -54,6 +54,10 @@ pub fn html_parts(
     if std::env::var("LEPTOS_OUTPUT_NAME").is_err() {
         wasm_output_name.push_str("_bg");
     }
+    let wasm_extension = ".wasm".to_string();
+    if options.compress {
+        wasm_output_name.push_str(".gz");
+    }
 
     let leptos_autoreload = autoreload(options);
 
@@ -66,8 +70,8 @@ pub fn html_parts(
                     <meta charset="utf-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     <link rel="modulepreload" href="/{pkg_path}/{output_name}.js">
-                    <link rel="preload" href="/{pkg_path}/{wasm_output_name}.wasm" as="fetch" type="application/wasm" crossorigin="">
-                    <script type="module">import init, {{ hydrate }} from '/{pkg_path}/{output_name}.js'; init('/{pkg_path}/{wasm_output_name}.wasm').then(hydrate);</script>
+                    <link rel="preload" href="/{pkg_path}/{wasm_output_name}{wasm_extension}" as="fetch" type="application/wasm" crossorigin="">
+                    <script type="module">import init, {{ hydrate }} from '/{pkg_path}/{output_name}.js'; init('/{pkg_path}/{wasm_output_name}{wasm_extension}').then(hydrate);</script>
                     {leptos_autoreload}
                     "#
     );
@@ -89,6 +93,10 @@ pub fn html_parts_separated(
     if std::env::var("LEPTOS_OUTPUT_NAME").is_err() {
         wasm_output_name.push_str("_bg");
     }
+    let wasm_extension = ".wasm".to_string();
+    if options.compress {
+        wasm_output_name.push_str(".gz");
+    }
 
     let leptos_autoreload = autoreload(options);
 
@@ -106,8 +114,8 @@ pub fn html_parts_separated(
                     <meta name="viewport" content="width=device-width, initial-scale=1"/>
                     {head}
                     <link rel="modulepreload" href="/{pkg_path}/{output_name}.js">
-                    <link rel="preload" href="/{pkg_path}/{wasm_output_name}.wasm" as="fetch" type="application/wasm" crossorigin="">
-                    <script type="module">import init, {{ hydrate }} from '/{pkg_path}/{output_name}.js'; init('/{pkg_path}/{wasm_output_name}.wasm').then(hydrate);</script>
+                    <link rel="preload" href="/{pkg_path}/{wasm_output_name}{wasm_extension}" as="fetch" type="application/wasm" crossorigin="">
+                    <script type="module">import init, {{ hydrate }} from '/{pkg_path}/{output_name}.js'; init('/{pkg_path}/{wasm_output_name}{wasm_extension}').then(hydrate);</script>
                     {leptos_autoreload}
                     "#
     );
