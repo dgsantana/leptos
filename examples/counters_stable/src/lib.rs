@@ -108,8 +108,7 @@ fn Counter(id: usize, value: ArcRwSignal<i32>) -> impl IntoView {
                     set_value.set(ev.target().value().parse::<i32>().unwrap_or_default())
                 }
             />
-            // TODO impl Render traits directly on signals in stable
-            <span>{move || value.read()}</span>
+            <span>{value}</span>
             <button data-testid="increment_count" on:click=move |_| set_value.update(move |value| *value += 1)>"+1"</button>
             <button data-testid="remove_counter" on:click=move |_| set_counters.update(move |counters| counters.retain(|(counter_id, _)| counter_id != &id))>"x"</button>
         </li>
